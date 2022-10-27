@@ -1,0 +1,108 @@
+body{
+    font-family: 'Josefin Sans', sans-serif;
+    background-image: url(../img/Bg.png);
+    background-size: cover;
+}
+.carousel-caption d-none d-md-block h5, p {
+    color: black;
+}
+.carousel-caption h5, .carousel-caption p {
+    color: white;
+            text-shadow: -1px 1px 0 #000,
+                          1px 1px 0 #000,
+                         1px -1px 0 #000,
+                        -1px -1px 0 #000;
+}
+#item1 {
+    height: 100%;
+    background-image: url(/img/TrueTF2.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+#item2 {
+    height: 100%;
+    background-image: url(/img/864431.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+#item3 {
+    height: 100%;
+    background-image: url(/img/thumb-1920-927337.png);
+    background-position: center center;
+    background-size: cover;
+}
+header {
+    background-color: rgba(128, 128, 128, 0.363);
+}
+main {
+    background-color: rgba(177, 177, 177, 0.385);
+    margin-bottom: 1%;
+    padding-bottom: 3%;
+}
+footer {
+    background-color: rgba(65, 65, 65, 0.389);
+}
+footer h2 {
+    font-size: 1em;
+    color: white;
+}
+.gradient {
+    background: linear-gradient(rgb(177, 177, 177), grey);
+}
+.padding {
+    padding-left: 15%;
+}
+.nav-item a {
+    font-size: 1.5em;
+    color: white;
+    transition: 1s all;
+}
+.nav-item a:hover {
+    color: rgb(173, 173, 173);
+}
+.nav-item a:active {
+    color: white;
+}
+/* Criar Torneio */
+form label, input {
+    text-align: center;
+}
+.form-group, .form-check {
+    padding: 2% 0 0 0;
+}
+.form-check {
+    margin-left: 2%;
+}
+.form-group {
+    width: 75%;
+    margin: 0 auto;
+}
+.form-group label {
+    font-size: 1.5em;
+}
+fieldset textarea {
+    width: 65%;
+}
+/* Assistir Torneio */
+.card {
+    display: inline-block;
+    margin-top: 4%;
+    width: 100%;
+    background-color: rgb(158, 158, 158);
+    border: 2px black;
+}
+.card .list-group-item {
+    background-color: rgb(126, 126, 126);
+}
+.modal-body p {
+    font-size: 1.5em;
+}
+@media screen and (max-width: 768px) {
+    .padding {
+        padding-left: 5%;
+    }
+    .nav-item a {
+        font-size: 1em;
+        color: white;
+    }
+}
