@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
 import javax.validation.constraints.Email;
@@ -38,7 +39,7 @@ public class Usuario {
 	@Size(min = 4, message = "O login deve ter no mínimo 4 caracteres")
 	private String login;
 	
-	private boolean ativo;	
+	private boolean ativo = true;	
 	
 	//private int tornvenc;
 	
@@ -48,7 +49,15 @@ public class Usuario {
 	@JoinTable(name="usuario_papel",
 			   joinColumns = @JoinColumn(name = "usuario_id"),
 			   inverseJoinColumns = @JoinColumn(name = "papel_id"))
+	
 	private List<Papel> papeis;
+	
+	@OneToMany
+	@JoinTable(name="usuario_torneio",
+	   joinColumns = @JoinColumn(name = "usuario_id"),
+	   inverseJoinColumns = @JoinColumn(name = "torneio_id"))
+	
+	private List<Torneio> torneios;
 
 	public Long getId() {
 		return id;
@@ -105,5 +114,12 @@ public class Usuario {
 		this.papeis = papeis;
 	}
 	
+	public List<Torneio> getTorneios() {
+		return torneios;
+	}
+
+	public void setTorneios(List<Torneio> torneios) {
+		this.torneios = torneios;
+	}
 	
 }

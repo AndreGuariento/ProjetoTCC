@@ -21,9 +21,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifms.EasyComp.modelo.Papel;
 import br.edu.ifms.EasyComp.modelo.Usuario;
+import br.edu.ifms.EasyComp.modelo.Local;
+import br.edu.ifms.EasyComp.modelo.Jogos;
+import br.edu.ifms.EasyComp.modelo.Torneio;
 import br.edu.ifms.EasyComp.repository.PapelRepository;
 import br.edu.ifms.EasyComp.repository.UsuarioRepository;
+import br.edu.ifms.EasyComp.repository.LocalRepository;
+import br.edu.ifms.EasyComp.repository.JogosRepository;
+import br.edu.ifms.EasyComp.repository.TorneioRepository;
+import br.edu.ifms.EasyComp.service.JogosService;
+import br.edu.ifms.EasyComp.service.LocalService;
 import br.edu.ifms.EasyComp.service.PapelService;
+import br.edu.ifms.EasyComp.service.TorneioService;
 import br.edu.ifms.EasyComp.service.UsuarioService;
 
 @Controller
@@ -41,6 +50,15 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private LocalService localService;
+	
+	@Autowired
+	private JogosService jogosService;
+	
+	@Autowired
+	private TorneioService torneioService;
 	
 	
 	/**
@@ -135,5 +153,125 @@ public class UsuarioController {
 		}		
 	    return "redirect:/usuario/admin/listar";
 	}
+	
+	@RequestMapping("/admin/listarLocal")
+	public String listarLocal(Model model) {
+		List<Local> lista = localService.listarLocal(); 
+		model.addAttribute("locais", lista);		
+		return "/auth/admin/admin-listar-local";		
+	}
+	
+	@GetMapping("/admin/apagarLocal/{id}")
+	public String deleteLocal(@PathVariable("id") long id, Model model) {
+		localService.apagarLocalPorId(id);
+	    return "redirect:/usuario/admin/listarLocal";
+	}
+	
+	@GetMapping("/editarLocal/{id}")
+	public String editarLocal(@PathVariable("id") long id, Model model) {
+		Local local = localService.buscarLocalPorId(id);
+	    model.addAttribute("local", local);
+	    return "/auth/user/user-alterar-local";
+	}
+	
+	@PostMapping("/editarLocal/{id}")
+	public String editarLocal(@PathVariable("id") long id, 
+			@Valid Local local, BindingResult result) {
+		if (result.hasErrors()) {
+	    	local.setId(id);
+	        return "/auth/user/user-alterar-local";
+	    }
+	    localService.alterarLocal(local);
+	    return "redirect:/usuario/admin/listarLocal";
+	}
+	
+	@RequestMapping("/admin/listarJogos")
+	public String listarJogo(Model model) {
+		List<Jogos> lista = jogosService.listarJogos(); 
+		model.addAttribute("jogos", lista);		
+		return "/auth/admin/admin-listar-jogos";		
+	}
+	
+	@GetMapping("/admin/apagarJogos/{id}")
+	public String deleteJogo(@PathVariable("id") long id, Model model) {
+		jogosService.apagarJogosPorId(id);
+	    return "redirect:/usuario/admin/listarJogos";
+	}
+	
+	@GetMapping("/editarJogos/{id}")
+	public String editarJ(@PathVariable("id") long id, Model model) {
+		Jogos jogos = jogosService.buscarJogosPorId(id);
+	    model.addAttribute("jogos", jogos);
+	    return "/auth/user/user-alterar-jogos";
+	}
+	
+	@PostMapping("/editarJogos/{id}")
+	public String editarJogos(@PathVariable("id") long id, 
+			@Valid Jogos jogos, BindingResult result) {
+		if (result.hasErrors()) {
+	    	jogos.setId(id);
+	        return "/auth/user/user-alterar-jogos";
+	    }
+	    jogosService.alterarJogos(jogos);
+	    return "redirect:/usuario/admin/listarJogos";
+	}
+	
+	@GetMapping("/novoTorneio")
+	public String adicionarTorneio(Model model) {
+		model.addAttribute("torneio", new Torneio());
+		return "/regtorneio";
+	}
+	
+	@PostMapping("/salvarTorneio")
+	public String salvarTorneio(@Valid Torneio torneio, BindingResult result, 
+				Model model, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
+			return "/regtorneio";
+		}
+		
+		Torneio tor = torneioService.buscarTorneioPorId(torneio.getId());
+		if (tor != null) {
+			model.addAttribute("torneioExiste", "Torneio já cadastrado");
+			return "/regtorneio";
+		}
+		
+		torneioService.gravarTorneio(torneio);
+		attributes.addFlashAttribute("mensagem", "Torneio salvo com sucesso!");
+		return "redirect:/torneios";
+	}
+	
+	@RequestMapping("/user/listarTorneio")
+	public String listarTorneio(Model model) {
+		List<Torneio> torneio = torneioService.listarTorneio(); 
+		model.addAttribute("torneios", torneio);		
+		return "/torneios";		
+	}
+	
+//	@GetMapping("/user/apagarTorneio")
+//	public String deleteTorneio(@PathVariable("id") long id, Model model) {
+//		torneioService.apagarTorneioPorId(id);
+//	    return "redirect:/usuario/user/listarTorneio";
+//	}
+//	
+//	@GetMapping("/editarTorneio/{id}")
+//	public String editarTorneio(@PathVariable("id") long id, Model model) {
+//		Torneio torneio = torneioService.buscarTorneioPorId(id);
+//	    model.addAttribute("torneio", torneio);
+//	    return "???";
+//	}
+//	
+//	@PostMapping("/editarTorneio/{id}")
+//	public String editarTorneio(@PathVariable("id") long id, 
+//			@Valid Torneio torneio, BindingResult result) {
+//		if (result.hasErrors()) {
+//	    	torneio.setId(id);
+//	        return "???";
+//	    }
+//	    torneioService.alterarTorneio(torneio);
+//	    return "???";
+//	}
 }
+
+
+
 

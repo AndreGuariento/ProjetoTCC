@@ -26,6 +26,11 @@ public class HomeController {
 	public String sobre() {
 		return "sobre";
 	}
+	
+	@RequestMapping("/regtorneio") 
+	public String regtorneio() {
+		return "regtorneio";
+	}
 
 }
 

@@ -12,4 +12,5 @@ public interface UsuarioService {
 	public void alterarUsuario(Usuario usuario);
 	public List<Usuario> listarUsuario();
 	public void atribuirPapelParaUsuario(long idUsuario, int[] idsPapeis, boolean isAtivo);
+	void atribuirTorneioParaUsuario(long idUsuario, int[] idsTorneios, boolean isAtivo);
 }

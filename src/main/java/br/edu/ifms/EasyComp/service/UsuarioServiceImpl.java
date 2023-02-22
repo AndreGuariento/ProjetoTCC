@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifms.EasyComp.modelo.Papel;
+import br.edu.ifms.EasyComp.modelo.Torneio;
 import br.edu.ifms.EasyComp.modelo.Usuario;
 import br.edu.ifms.EasyComp.repository.UsuarioRepository;
 
@@ -20,6 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private PapelService papelService;
+	
+	@Autowired
+	private TorneioService torneioService;
 	
 	@Autowired
 	private BCryptPasswordEncoder criptografia;
@@ -80,6 +84,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		Usuario usuario = buscarUsuarioPorId(idUsuario);
 		usuario.setPapeis(papeis);
+		usuario.setAtivo(isAtivo);
+		alterarUsuario(usuario);		
+	}
+	
+	@Override
+	public void atribuirTorneioParaUsuario(long idUsuario, int[] idsTorneios, boolean isAtivo) {
+		List<Torneio> torneios = new ArrayList<Torneio>();			 
+		for (int i = 0; i < idsTorneios.length; i++) {
+			long idTorneio = idsTorneios[i];
+			Torneio torneio = torneioService.buscarTorneioPorId(idTorneio);
+			torneios.add(torneio);
+		}
+		Usuario usuario = buscarUsuarioPorId(idUsuario);
+		usuario.setTorneios(torneios);
 		usuario.setAtivo(isAtivo);
 		alterarUsuario(usuario);		
 	}
