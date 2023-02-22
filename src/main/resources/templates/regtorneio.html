@@ -17,20 +17,40 @@
             <div th:replace="auth/auth-generica-nav :: navGenerica"></div>
         </header>
         <main class="container-md">
-            <form class="text-center" style="padding-top: 2%;" method="GET" autocomplete="on" enctype="multipart/form-data">
+            <form class="text-center" style="padding-top: 2%;" th:action="@{/novoTorneio}" method="post">
                 <h1>Criar Torneio</h1>
                   <div class="form-group">
                     <label for="nomeTorneio">Digite o nome do torneio</label>
-                    <input type="text" class="form-control" id="nomeTorneio">
+                    <input type="text" class="form-control" id="tnome" name="nome">
                   </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="jogoEscolha">Escolha o jogo</label>
                     <select class="form-control" id="jogoEscolha" style="text-align: center;">
                       <option value="1">Team Fortress 2</option>
                       <option value="2">Mario Kart 8 Deluxe</option>
                       <option value="3">Super Smash Bros, Ultimate</option>
                     </select>
-                  </div>
+                  </div>-->
+                  <div class="form-group">
+						<label for="jogoEscolha" class="col-sm-1 col-form-label">Escolha o jogo:</label>
+						<div class="col-sm-2">
+							<th:block th:each="jg : ${listaJogos}">								
+								<div th:if="${#lists.contains(torneio.jogos, jg)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="jgs"
+										th:value="${jg.id}" checked/> 
+									<label class="form-check-label" th:text="${jg.jogos}"></label>
+								</div>
+								<div th:unless="${#lists.contains(torneio.jogos, jg)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="jgs"
+										th:value="${jg.id}"/> 
+									<label class="form-check-label" th:text="${jg.jogos}"></label>
+								</div>
+							</th:block>	
+						</div>	
+						<div class="col-sm-5">
+							<span class="mensagem" th:if="${mensagem}" th:text="${mensagem}"></span>
+						</div>					
+					</div>
                   <div class="form-group" style="width: 25%;">
                     <label for="quantEscolha">Quantos jogadores?</label>
                     <select class="form-control" id="quantEscolha" style="text-align: center;">
