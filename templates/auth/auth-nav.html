@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+	<nav th:fragment="nav" style="width: 100%" class="text-center">
+	<a href="/" title="Pagina Principal" style="padding: 2.5% 0; text-decoration: none;">
+        <!-- <img class="rounded mx-auto d-block" style="width: 15%;" src="img/92-925747_super-smash-bros-super-mario-kart-vector-clipart transparent.png"> -->
+        <span style="text-decoration: none; color: black; font-size: 2.5em">EasyComp</span>
+        </a>
+        <ul class="nav navbar-nav ms-auto">
+        	<li class="nav-item col">
+        	<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> 
+				<span th:text ="${#authentication.getPrincipal().getNome()}"></span>
+			</a>
+			<div class="dropdown-menu dropdown-menu">
+				<a href="/logout" class="dropdown-item" style="color: red;">Sair</a>
+			</div>
+			
+        	</li>
+            <li class="nav-item col">
+              <a class="nav-link active" aria-current="page" href="/regtorneio">Criar Torneio</a>
+            </li>
+            <li class="nav-item col">
+              <a class="nav-link" href="/asstorneio">Assistir Torneio</a>
+            </li>
+            <li class="nav-item col">
+              <a class="nav-link" href="/sobre">Sobre</a>
+            </li>
+          </ul>
+          </nav>
+</body>
+</html>
