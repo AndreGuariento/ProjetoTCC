@@ -12,59 +12,46 @@
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" th:href="@{/master.css}">
     </head>
+       <style>
+.mensagem {
+  color: red;
+}
+</style>
     <body>
-       <header class="container-md">
+        <header class="container-md">
             <div th:replace="auth/auth-generica-nav :: navGenerica"></div>
         </header>
         <main class="container-md">
-            <form class="text-center" style="padding-top: 2%;" th:action="@{/novoTorneio}" method="post">
-                <h1>Criar Torneio</h1>
-                  <div class="form-group">
-                    <label for="nomeTorneio">Digite o nome do torneio</label>
-                    <input type="text" class="form-control" id="tnome" name="nome">
+	        <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				<span th:text="${mensagem}"></span>
+			</div>
+            <form class="text-center" id="form2" action="#" th:action="@{/usuario/salvarTorneio}" th:object="${torneio}" method="post">
+                <div class="form-group">
+                    <label for="ntorneio">Insira o nome do torneio</label>
+                    <input type="text" class="form-control" id="ntorneio" th:field="*{nome}">
+                    <span class="mensagem" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
                   </div>
-                <!--<div class="form-group">
-                    <label for="jogoEscolha">Escolha o jogo</label>
-                    <select class="form-control" id="jogoEscolha" style="text-align: center;">
-                      <option value="1">Team Fortress 2</option>
-                      <option value="2">Mario Kart 8 Deluxe</option>
-                      <option value="3">Super Smash Bros, Ultimate</option>
-                    </select>
-                  </div>-->
                   <div class="form-group">
-						<label for="jogoEscolha" class="col-sm-1 col-form-label">Escolha o jogo:</label>
-						<div class="col-sm-2">
-							<th:block th:each="jg : ${listaJogos}">								
-								<div th:if="${#lists.contains(torneio.jogos, jg)}" class="form-check">
-										<input class="form-check-input" type="checkbox" name="jgs"
-										th:value="${jg.id}" checked/> 
-									<label class="form-check-label" th:text="${jg.jogos}"></label>
-								</div>
-								<div th:unless="${#lists.contains(torneio.jogos, jg)}" class="form-check">
-										<input class="form-check-input" type="checkbox" name="jgs"
-										th:value="${jg.id}"/> 
-									<label class="form-check-label" th:text="${jg.jogos}"></label>
-								</div>
-							</th:block>	
-						</div>	
-						<div class="col-sm-5">
-							<span class="mensagem" th:if="${mensagem}" th:text="${mensagem}"></span>
-						</div>					
-					</div>
-                  <div class="form-group" style="width: 25%;">
-                    <label for="quantEscolha">Quantos jogadores?</label>
-                    <select class="form-control" id="quantEscolha" style="text-align: center;">
-                      <option value="1">2</option>
-                      <option value="2">4</option>
-                      <option value="3">8</option>
-                      <option value="4">16</option>
-                      <option value="5">32</option>
-                      <option value="6">64</option>
-                    </select>
+                    <label for="tlink">Insira o link de visualização do torneio</label>
+                    <input type="text" class="form-control" id="tlink" th:field="*{link}">
+                    <span class="mensagem" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></span>
                   </div>
-                   <a href="regtorneio2.html"><input type="button" class="btn-lg btn-primary" style="margin-top: 2%;" value="Próximo"></a>
-        </form>
-            </div>
+                <div class="form-group">
+                  <label for="tpartic">Numero de Participantes</label>
+                  <input type="text" class="form-control" id="tpartic" th:field="*{numpartic}">
+                  <span class="mensagem" th:if="${#fields.hasErrors('numpartic')}" th:errors="*{numpartic}"></span>
+                </div>
+                
+                <!-- <div class="form-group">
+                  <label for="id">ID</label>
+                  <input type="text" class="form-control" id="id" th:field="*{id}">
+                  <span class="mensagem" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+                </div> -->
+
+                <p id="rresultado"></p>
+                <input type="submit" class="btn-lg btn-primary" style="margin-top: 2%;" value="Proximo">
+              </form>
         </main>
         <footer class="container-md">
             <div th:replace="fragments/publica-footer :: foot"></div>
