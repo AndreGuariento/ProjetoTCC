@@ -60,17 +60,17 @@ public class TorneioServiceImpl implements TorneioService {
 		return torneio;
 	}
 	
-//	@Override
-//	public void atribuirJogosParaTorneio(long idTorneios, int[] idsJogos, boolean isAberto) {
-//		List<Jogos> jogos = new ArrayList<Jogos>();			 
-//		for (int i = 0; i < idsJogos.length; i++) {
-//			long idJogos = idsJogos[i];
-//			Jogos jogos = jogosService.buscarJogosPorId(idJogos);
-//			jogos.add(jogos);
-//		}
-//		Torneio torneio = buscarTorneioPorId(idTorneios);
-//		torneio.setJogos(jogos);
-//		torneio.setAberto(isAberto);
-//		alterarTorneio(torneio);		
-//	}
+	@Override
+	public void atribuirJogoParaTorneio(long idTorneios, int[] idsJogos, boolean isAberto) {
+		List<Jogos> jogos = new ArrayList<Jogos>();			 
+		for (int i = 0; i < idsJogos.length; i++) {
+			long idJogos = idsJogos[i];
+			Jogos jogo = jogosService.buscarJogosPorId(idJogos);
+			jogos.add(jogo);
+		}
+		Torneio torneio = buscarTorneioPorId(idTorneios);
+		torneio.setJogos(jogos);
+		torneio.setAberto(isAberto);
+		alterarTorneio(torneio);		
+	}
 }

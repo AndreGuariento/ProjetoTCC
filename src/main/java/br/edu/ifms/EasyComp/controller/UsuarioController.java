@@ -229,15 +229,15 @@ public class UsuarioController {
 			return "/regtorneio";
 		}
 		
-		Torneio tor = torneioService.buscarTorneioPorId(torneio.getId());
-		if (tor != null) {
-			model.addAttribute("torneioExiste", "Torneio já cadastrado");
-			return "/regtorneio";
-		}
+//		Torneio tor = torneioService.buscarTorneioPorId(torneio.getId());
+//		if (tor != null) {
+//			model.addAttribute("torneioExiste", "Torneio já cadastrado");
+//			return "/regtorneio";
+//		}
 		
 		torneioService.gravarTorneio(torneio);
 		attributes.addFlashAttribute("mensagem", "Torneio salvo com sucesso!");
-		return "redirect:/torneios";
+		return "redirect:/asstorneio";
 	}
 	
 	@RequestMapping("/user/listarTorneio")
@@ -245,6 +245,21 @@ public class UsuarioController {
 		List<Torneio> torneio = torneioService.listarTorneio(); 
 		model.addAttribute("torneios", torneio);		
 		return "/torneios";		
+	}
+	
+	@PostMapping("user/atribuirJogo/{id}")
+	public String atribuirJogo(@PathVariable("id") long idTorneio, 
+								@RequestParam(value = "jgs", required=false) int[] jgs, 
+								Torneio torneio, 
+								RedirectAttributes attributes) {
+		if (jgs == null) {
+			torneio.setId(idTorneio);
+			attributes.addFlashAttribute("mensagem", "Pelo menos um jogo deve ser informado");
+			return "redirect:/usuario/editarJogos/"+idTorneio;
+		} else {
+			torneioService.atribuirJogoParaTorneio(idTorneio, jgs, torneio.isAberto());		
+		}		
+	    return "redirect:/usuario/admin/listar";
 	}
 	
 //	@GetMapping("/user/apagarTorneio")

@@ -10,5 +10,6 @@ public interface TorneioService {
 	public Torneio buscarTorneioPorNome(String nome);
 	public Torneio gravarTorneio(Torneio torneio);
 	public void alterarTorneio(Torneio torneio);
+	public void atribuirJogoParaTorneio(long idTorneio, int[] idsJogos, boolean isAberto);
 	public List<Torneio> listarTorneio();
 }
