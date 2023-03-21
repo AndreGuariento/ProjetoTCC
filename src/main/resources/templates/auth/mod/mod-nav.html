@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <body>
-  <nav th:fragment="nav" class="navbar navbar-expand-sm">
+  <nav th:fragment="nav" class="navbar navbar-expand-md nav-fill" style="border: 4px black solid; background-color: rgb(54, 54, 54); margin-bottom: 1%">
+        <div class="dropdown" style="width: 100%">
         <div class="container-fluid">
             <a href="#" class="navbar-brand">Mod</a>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div id="navbarCollapse" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+                   
+                <ul th:replace="auth/auth-nav :: nav"> </ul> <!-- adicionado -->
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+               <ul class="nav mx-auto text-center">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gerenciamento</a>
                         <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Torneios</a>
+                            <a href="#" class="dropdown-item" style="color: black;">Torneios</a>
                         </div>
                     </li>
-                </ul>               
-                <ul th:replace="auth/auth-nav :: nav"> </ul> <!-- adicionado -->
+                </ul>      
+                </div>              
+                
             </div>
         </div>
     </nav>    

@@ -12,36 +12,75 @@
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" th:href="@{/master.css}">
     </head>
-    <body>
-        <header class="container-md">
-            <div th:replace="auth/auth-generica-nav :: navGenerica"></div>
-        </header>
-        <main class="container-md">
-            <form class="text-center" style="padding-top: 2%;" method="GET" autocomplete="on" enctype="multipart/form-data">
-                <h1>Criar Torneio</h1>
-                <h2 style="padding-top: 2%;">Qual o tipo de torneio?</h2>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Casco Azul">
-                        <label class="form-check-label" for="inlineRadio1">Tipo 1</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Fogo Azul">
-                        <label class="form-check-label" for="inlineRadio2">Tipo 2</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Rainbow Road">
-                        <label class="form-check-label" for="inlineRadio3">Tipo 3</label>
-                      </div>
-                <h2 style="padding-top: 2%;">Preencha a area de texto abaixo com alguma descrição do torneio sendo criado.</h2>
-            <fieldset>
-                <textarea rows="10" cols="10"></textarea>
-            </fieldset>
-            <a href="torneios.html"><input type="button" class="btn-lg btn-primary" style="margin-top: 2%;" value="Criar"></a>
-        </form>
-            </div>
-        </main>
-       <footer class="container-md">
-            <div th:replace="fragments/publica-footer :: foot"></div>
-        </footer>
-    </body>
+       <style>
+.mensagem {
+  color: red;
+}
+</style>
+</head>
+<body>
+	<div th:replace="auth/auth-generica-nav :: navGenerica"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2>Qual jogo?</h2>
+				<form action="#"
+					th:action="@{/usuario/atribuirJogos/{id}(id=${torneio.id})}"
+					th:object="${torneio}" method="post">
+
+					<div class="row mb-3">
+						<label class="col-sm-1 col-form-label">Nome:</label>
+						<div class="col-sm-5">
+							<input class="form-control" type="text" th:field="*{nome}"
+								disabled>
+						</div>
+					</div>			
+	
+					<div class="row mb-3">
+						<label class="col-sm-1 col-form-label">Aberto?:</label>
+						<div class="col-sm-2">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" value="true"
+									th:field="*{aberto}"> 
+								<label class="form-check-label">aberto</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" value="false"
+									th:field="*{aberto}"> 
+								<label class="form-check-label">não aberto</label>
+							</div>
+						</div>
+					</div>					
+
+
+					<div class="row mb-3">
+						<label class="col-sm-1 col-form-label">Jogos:</label>
+						<div class="col-sm-2">
+							<th:block th:each="jg : ${listaJogos}">								
+								<div th:if="${#lists.contains(torneio.jogos, jg)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="jgs"
+										th:value="${jg.id}" checked/> 
+									<label class="form-check-label" th:text="${jg.jogos}"></label>
+								</div>
+								<div th:unless="${#lists.contains(torneio.jogos, jg)}" class="form-check">
+										<input class="form-check-input" type="checkbox" name="jgs"
+										th:value="${jg.id}"/> 
+									<label class="form-check-label" th:text="${jg.jogos}"></label>
+								</div>
+							</th:block>	
+						</div>	
+						<div class="col-sm-5">
+							<span class="mensagem" th:if="${mensagem}" th:text="${mensagem}"></span>
+						</div>					
+					</div>
+
+					<input class="btn btn-primary" type="submit" value="Alterar" />
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
 </html>

@@ -106,3 +106,9 @@ fieldset textarea {
         color: white;
     }
 }
+
+/* Listar */
+
+.col h1, .col th, .col span, .col h2, .col label {
+	color: white;
+}

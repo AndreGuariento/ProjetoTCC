@@ -42,7 +42,20 @@
                   <input type="text" class="form-control" id="tpartic" th:field="*{numpartic}">
                   <span class="mensagem" th:if="${#fields.hasErrors('numpartic')}" th:errors="*{numpartic}"></span>
                 </div>
-                
+                <!-- <div class="form-group">
+                  <label for="tpartic">Jogos</label>
+                  <input type="text" class="form-control" id="jogo" th:field="*{jogos_id}">
+                  <span class="mensagem" th:if="${#fields.hasErrors('jogos_id')}" th:errors="*{jogos_id}"></span>
+                </div> -->
+                <div class="form-group">
+                    <label for="jogoEscolha">Escolha o jogo</label>
+                     <select class="form-control" id="jogoEscolha" style="text-align: center;" th:field="*{jogos}">
+                        <option value=""> -- </option>
+                        <option th:each="jogo : ${listajogos}"
+                           th:value="${jogo.id}"
+                           th:utext="${jogo.nome}"/>
+                  </select>
+                  </div>  
                 <!-- <div class="form-group">
                   <label for="id">ID</label>
                   <input type="text" class="form-control" id="id" th:field="*{id}">
