@@ -52,7 +52,7 @@ public class Usuario {
 	
 	private List<Papel> papeis;
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name="usuario_torneio",
 	   joinColumns = @JoinColumn(name = "usuario_id"),
 	   inverseJoinColumns = @JoinColumn(name = "torneio_id"))
@@ -121,5 +121,6 @@ public class Usuario {
 	public void setTorneios(List<Torneio> torneios) {
 		this.torneios = torneios;
 	}
+	
 	
 }

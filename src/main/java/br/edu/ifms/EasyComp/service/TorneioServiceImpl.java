@@ -44,8 +44,13 @@ public class TorneioServiceImpl implements TorneioService {
 	}
 
 	@Override
-	public Torneio gravarTorneio(Torneio torneio) {			
-				
+	public Torneio gravarTorneio(Torneio torneio) {	
+		
+//		Jogos jogos = jogosService.buscarJogosPorId(1);
+//		List<Papel> papeis = new ArrayList<Papel>();
+//		papeis.add(papel);				
+//		usuario.setPapeis(papeis); // associa o papel de USER ao usuário
+//				
 		return torneioRepository.save(torneio);
 	}
 
@@ -60,17 +65,17 @@ public class TorneioServiceImpl implements TorneioService {
 		return torneio;
 	}
 	
-	@Override
-	public void atribuirJogoParaTorneio(long idTorneios, int[] idsJogos, boolean isAberto) {
-		List<Jogos> jogos = new ArrayList<Jogos>();			 
-		for (int i = 0; i < idsJogos.length; i++) {
-			long idJogos = idsJogos[i];
-			Jogos jogo = jogosService.buscarJogosPorId(idJogos);
-			jogos.add(jogo);
-		}
-		Torneio torneio = buscarTorneioPorId(idTorneios);
-		torneio.setJogos(jogos);
-		torneio.setAberto(isAberto);
-		alterarTorneio(torneio);		
-	}
+//	@Override
+//	public void atribuirJogoParaTorneio(long idTorneios, int[] idsJogos, boolean isAberto) {
+//		List<Jogos> jogos = new ArrayList<Jogos>();			 
+//		for (int i = 0; i < idsJogos.length; i++) {
+//			long idJogos = idsJogos[i];
+//			Jogos jogo = jogosService.buscarJogosPorId(idJogos);
+//			jogos.add(jogo);
+//		}
+//		Torneio torneio = buscarTorneioPorId(idTorneios);
+//		torneio.setJogos(jogos);
+//		torneio.setAberto(isAberto);
+//		alterarTorneio(torneio);		
+//	}
 }

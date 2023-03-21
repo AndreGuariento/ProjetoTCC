@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.edu.ifms.EasyComp.modelo.Torneio;
+
 @Controller
 public class HomeController {
 	
@@ -28,8 +30,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/regtorneio") 
-	public String regtorneio() {
+	public String regtorneio(Model model) {
+		model.addAttribute("torneio", new Torneio());
 		return "regtorneio";
+	}
+	
+	@RequestMapping("/regtorneio2") 
+	public String regtorneio2() {
+		return "regtorneio2";
 	}
 
 }

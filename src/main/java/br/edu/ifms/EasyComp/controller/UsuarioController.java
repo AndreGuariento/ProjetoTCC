@@ -105,6 +105,15 @@ public class UsuarioController {
 		return "/auth/admin/admin-listar-usuario";		
 	}
 	
+	@GetMapping("/inscrever/{id}")
+	public String inscreverUsuario(@PathVariable("id") long id, Model model, @CurrentSecurityContext(expression = "authentication.name") String login) {
+		Usuario usuario = usuarioService.buscarUsuarioPorLogin(login);
+		Torneio torneio = torneioService.buscarTorneioPorId(id);
+		usuario.getTorneios().add(torneio);
+		usuarioService.gravarUsuario(usuario);
+	    return "redirect:/asstorneio";
+	}
+	
 	@GetMapping("/admin/apagar/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
 		usuarioService.apagarUsuarioPorId(id);
@@ -218,6 +227,8 @@ public class UsuarioController {
 	
 	@GetMapping("/novoTorneio")
 	public String adicionarTorneio(Model model) {
+		List<Jogos> jogos = jogosService.listarJogos();
+		model.addAttribute("listajogos", jogos);
 		model.addAttribute("torneio", new Torneio());
 		return "/regtorneio";
 	}
@@ -247,20 +258,20 @@ public class UsuarioController {
 		return "/torneios";		
 	}
 	
-	@PostMapping("user/atribuirJogo/{id}")
-	public String atribuirJogo(@PathVariable("id") long idTorneio, 
-								@RequestParam(value = "jgs", required=false) int[] jgs, 
-								Torneio torneio, 
-								RedirectAttributes attributes) {
-		if (jgs == null) {
-			torneio.setId(idTorneio);
-			attributes.addFlashAttribute("mensagem", "Pelo menos um jogo deve ser informado");
-			return "redirect:/usuario/editarJogos/"+idTorneio;
-		} else {
-			torneioService.atribuirJogoParaTorneio(idTorneio, jgs, torneio.isAberto());		
-		}		
-	    return "redirect:/usuario/admin/listar";
-	}
+//	@PostMapping("user/atribuirJogo/{id}")
+//	public String atribuirJogo(@PathVariable("id") long idTorneio, 
+//								@RequestParam(value = "jgs", required=false) int[] jgs, 
+//								Torneio torneio, 
+//								RedirectAttributes attributes) {
+//		if (jgs == null) {
+//			torneio.setId(idTorneio);
+//			attributes.addFlashAttribute("mensagem", "Pelo menos um jogo deve ser informado");
+//			return "redirect:/usuario/editarJogos/"+idTorneio;
+//		} else {
+//			torneioService.atribuirJogoParaTorneio(idTorneio, jgs, torneio.isAberto());		
+//		}		
+//	    return "redirect:/usuario/admin/listar";
+//	}
 	
 //	@GetMapping("/user/apagarTorneio")
 //	public String deleteTorneio(@PathVariable("id") long id, Model model) {

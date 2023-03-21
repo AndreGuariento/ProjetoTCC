@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -24,17 +26,16 @@ public class Torneio {
 	
 	private String link;
 	
+	private String nomejogo;
+	
 	private boolean aberto;
 	
-	@OneToMany(mappedBy = "torneios", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "torneios")
 	private List<Usuario> usuarios;
 	
-	@OneToMany
-	@JoinTable(name="jogos_torneio",
-	   joinColumns = @JoinColumn(name = "torneio_id"),
-	   inverseJoinColumns = @JoinColumn(name = "jogos_id"))
 	
-	private List<Jogos> jogos;
+	@ManyToOne
+	private Jogos jogos;
 
 	public Long getId() {
 		return id;
@@ -83,14 +84,24 @@ public class Torneio {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
-	public List<Jogos> getJogos() {
+
+	public String getNomejogo() {
+		return nomejogo;
+	}
+
+	public void setNomejogo(String nomejogo) {
+		this.nomejogo = nomejogo;
+	}
+
+	public Jogos getJogos() {
 		return jogos;
 	}
 
-	public void setJogos(List<Jogos> jogos) {
+	public void setJogos(Jogos jogos) {
 		this.jogos = jogos;
 	}
+	
+	
 	
 	
 }
