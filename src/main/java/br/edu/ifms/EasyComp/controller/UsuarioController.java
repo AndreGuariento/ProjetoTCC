@@ -105,6 +105,20 @@ public class UsuarioController {
 		return "/auth/admin/admin-listar-usuario";		
 	}
 	
+	@RequestMapping("/mod/listarUserTorneioId/{id}")
+	public String listarUsuarioTorneioID(Model model, @PathVariable("id") long id) {		
+		Torneio torneio = torneioService.buscarTorneioPorId(id);
+	    model.addAttribute("torneio", torneio);
+		return "/auth/mod/admin-listar-usuariotorneio";		
+	}
+	
+	@RequestMapping("/mod/listarUserTorn")
+	public String listarUsuarioTorneio(Model model) {
+		List<Usuario> lista = usuarioService.listarUsuario(); 
+		model.addAttribute("usuarios", lista);		
+		return "/auth/mod/admin-listar-usuariotorneio";		
+	}
+	
 	@GetMapping("/inscrever/{id}")
 	public String inscreverUsuario(@PathVariable("id") long id, Model model, @CurrentSecurityContext(expression = "authentication.name") String login) {
 		Usuario usuario = usuarioService.buscarUsuarioPorLogin(login);

@@ -26,8 +26,6 @@ public class Torneio {
 	
 	private String link;
 	
-	private String nomejogo;
-	
 	private boolean aberto;
 	
 	@ManyToMany(mappedBy = "torneios")
@@ -83,14 +81,6 @@ public class Torneio {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	public String getNomejogo() {
-		return nomejogo;
-	}
-
-	public void setNomejogo(String nomejogo) {
-		this.nomejogo = nomejogo;
 	}
 
 	public Jogos getJogos() {
