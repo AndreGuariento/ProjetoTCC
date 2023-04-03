@@ -20,94 +20,41 @@
             <div class="text-center" style="padding: 2% 0;">
                 <h1>Torneios Disponíveis</h1>
             </div>
-            <!-- Cards -->
-            <div class="row">
+                <div class="row">
+                <th:block th:each="torneio : ${torneios}">
                 <div class="col-md-4">
-                  <div class="card">
-                    <img class="card-img-top" src="img/TrueTF2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">2022 Extreme TF2 Tourney (6v6)</h5>
-                      <p class="card-text">O popular torneio anual de TF2!</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Equipes inscritas: 4</li>
-                      <li class="list-group-item">Vagas restantes: 2</li>
-                      <li class="list-group-item">Incrições abertas somente hoje!</li>
-                    </ul>
-                    <div class="card-body">
-                      <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#torneioSingle">Inscrever-se</button>
-                      <!-- <a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/usuario/inscrever/{id}(id=${torneio.id})}">Inscrever-se</a> -->
-                      <a href="regtorneio2.html"><input type="button" class="btn-lg btn-primary" style="margin-top: 2%;" value="Acompanhar"></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card">
-                    <img class="card-img-top" src="img/864431.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Torneio Super Estrela</h5>
-                      <p class="card-text">A nova edição do novo torneio de Mario Kart 8 Deluxe!</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Jogadores inscritos: 21</li>
-                      <li class="list-group-item">Vagas restantes: 3</li>
-                      <li class="list-group-item">Incrições abertas até amanhã!</li>
-                    </ul>
-                    <div class="card-body">
-                      <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#torneioSingle">Inscrever-se</button>
-                      <a href="regtorneio2.html"><input type="button" class="btn-lg btn-primary" style="margin-top: 2%;" value="Acompanhar"></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card">
-                    <img class="card-img-top" src="img/thumb-1920-927337.png" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Smashing Tourney</h5>
-                      <p class="card-text">Torneio de singles de Super Smash Bros. Ultimate!</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Jogadores inscritos: 13</li>
-                      <li class="list-group-item">Vagas restantes: 3</li>
-                      <li class="list-group-item">Incrições abertas até semana que vem!</li>
-                    </ul>
-                    <div class="card-body">
-                      <button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#torneioSingle">Inscrever-se</button>
-                      <a href="regtorneio2.html"><input type="button" class="btn-lg btn-primary" style="margin-top: 2%;" value="Acompanhar"></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal -->
-              
-              <div class="modal fade" id="torneioSingle" tabindex="-1" aria-labelledby="torneioSingleLab" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="torneioSingleLab">Para realizar a inscrição, digite a sua senha abaixo.</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form class="text-center" id="form1" onsubmit="return false">
-                        <div class="form-group">
-                          <label for="isenha">Senha</label>
-                          <input type="password" class="form-control" id="isenha">
+                    <div class="card">
+                        <div class="card-body">
+                        	<img class="card-img-top" src="/img/tourney.png" alt="Card image cap">
+                            <h5 class="card-title"><span th:text="${torneio.nome}"> Nome </span></h5>
+                            <ul class="list-group list-group-flush">
+                      			<li class="list-group-item"><span th:text="${torneio.numpartic}"> Numero de Participantes: </span></li>
+                    		</ul>
+                            <a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/usuario/inscrever/{id}(id=${torneio.id})}">Inscrever-se</a>
+                    		<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="${torneio.link}">Acompanhar</a>
                         </div>
-                        <div class="form-group">
-                            <label for="icsenha">Confirmar Senha</label>
-                            <input type="password" class="form-control" id="icsenha">
-                          </div>
-                      </form>  
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn-lg btn-success">Inscrever-se</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+                </th:block>
+               <!--  <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card 2</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card 3</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </main>
         <footer class="container-md">
             <div th:replace="fragments/publica-footer :: foot"></div>
