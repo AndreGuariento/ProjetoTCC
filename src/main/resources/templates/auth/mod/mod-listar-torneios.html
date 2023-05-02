@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" xmls:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pt" xmls:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>EasyComp</title>
@@ -18,9 +17,8 @@
             <div th:replace="auth/auth-generica-nav :: navGenerica"></div>
         </header>
         <main class="container-md">
-        <a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/asstorneioinsc}" style="padding: 5% 3%; text-decoration: none;">Meus Torneios</a>
             <div class="text-center" style="padding: 2% 0;">
-                <h1>Torneios Disponíveis</h1>
+                <h1>Gerenciar Torneios</h1>
             </div>
                 <div class="row">
                 <th:block th:each="torneio : ${torneios}">
@@ -35,17 +33,7 @@
 								</th:block>	
                       			<li class="list-group-item"><span th:text="${#dates.format(torneio.dataTorn, 'dd/MM/yyyy')}"> Data: </span></li>
                     		</ul>
-                    		<!-- <tr th:if="${usuario.id < 0}">
-							<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="/usuario/novo" style="padding: 5% 3%; text-decoration: none;">Inscrever-se</a>
-							</tr> -->
-							<div sec:authorize="!isAuthenticated()">
-            					<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/login}" style="padding: 5% 3%; text-decoration: none;">Faça Login!</a>
-            					<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="${torneio.link}" style="padding: 5% 3%; text-decoration: none;">Acompanhar</a>
-        					</div>	
-        					<div sec:authorize="isAuthenticated()">
-            					<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/usuario/inscrever/{id}(id=${torneio.id})}" style="padding: 5% 3%; text-decoration: none;">Inscrever-se</a>
-            					<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="${torneio.link}" style="padding: 5% 3%; text-decoration: none;">Acompanhar</a>
-        					</div>
+                    		<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/usuario/mod/listarUserTorneioId/{id}(id=${torneio.id})}" style="padding: 5% 3%; text-decoration: none;">Visualizar</a>
                         </div>
                     </div>
                 </div>

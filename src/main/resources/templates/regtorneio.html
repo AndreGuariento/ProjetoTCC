@@ -38,9 +38,9 @@
                     <span class="mensagem" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></span>
                   </div>
                 <div class="form-group">
-                  <label for="tpartic">Numero de Participantes</label>
-                  <input type="text" class="form-control" id="tpartic" th:field="*{numpartic}">
-                  <span class="mensagem" th:if="${#fields.hasErrors('numpartic')}" th:errors="*{numpartic}"></span>
+                  <label for="tpartic">Data do Torneio</label>
+                  <input type="text" class="form-control" id="tpartic" th:field="*{dataTorn}">
+                  <span class="mensagem" th:if="${#fields.hasErrors('dataTorn')}" th:errors="*{dataTorn}"></span>
                 </div>
                 <!-- <div class="form-group">
                   <label for="tpartic">Jogos</label>
@@ -63,7 +63,7 @@
                 </div> -->
 
                 <p id="rresultado"></p>
-                <input type="submit" class="btn-lg btn-primary" style="margin-top: 2%;" value="Proximo">
+                <input type="submit" class="btn-lg btn-primary" style="margin-top: 2%;" value="Criar">
               </form>
         </main>
         <footer class="container-md">

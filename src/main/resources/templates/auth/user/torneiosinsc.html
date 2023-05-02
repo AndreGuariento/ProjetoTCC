@@ -18,9 +18,8 @@
             <div th:replace="auth/auth-generica-nav :: navGenerica"></div>
         </header>
         <main class="container-md">
-        <a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="@{/asstorneioinsc}" style="padding: 5% 3%; text-decoration: none;">Meus Torneios</a>
             <div class="text-center" style="padding: 2% 0;">
-                <h1>Torneios Disponíveis</h1>
+                <h1>Torneios Inscritos</h1>
             </div>
                 <div class="row">
                 <th:block th:each="torneio : ${torneios}">
