@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
@@ -58,6 +59,9 @@ public class Usuario {
 	   inverseJoinColumns = @JoinColumn(name = "torneio_id"))
 	
 	private List<Torneio> torneios;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Torneio> torneiospes;
 
 	public Long getId() {
 		return id;
@@ -121,6 +125,21 @@ public class Usuario {
 	public void setTorneios(List<Torneio> torneios) {
 		this.torneios = torneios;
 	}
+
+	public List<Torneio> getTorneiospes() {
+		return torneiospes;
+	}
+
+	public void setTorneiospes(List<Torneio> torneiospes) {
+		this.torneiospes = torneiospes;
+	}
+	
+	public void removeUserTorneio(Torneio torneio){
+		   this.torneios.remove(torneio);
+		   torneio.getUsuarios().remove(this);
+		}
+	
+	
 	
 	
 }

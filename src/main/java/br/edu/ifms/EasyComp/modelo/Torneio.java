@@ -1,7 +1,9 @@
 package br.edu.ifms.EasyComp.modelo;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Torneio {
@@ -20,9 +28,14 @@ public class Torneio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
+	@Size(min = 1, message = "O nome deve ter no mínimo 1 caracter")
 	private String nome;
 	
-	private String numpartic;
+	@Basic
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dataTorn;
 	
 	private String link;
 	
@@ -31,6 +44,8 @@ public class Torneio {
 	@ManyToMany(mappedBy = "torneios")
 	private List<Usuario> usuarios;
 	
+	@ManyToOne
+	private Usuario usuario;
 	
 	@ManyToOne
 	private Jogos jogos;
@@ -50,13 +65,13 @@ public class Torneio {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public String getNumpartic() {
-		return numpartic;
+	
+	public Date getDataTorn() {
+		return dataTorn;
 	}
 
-	public void setNumpartic(String numpartic) {
-		this.numpartic = numpartic;
+	public void setDataTorn(Date dataTorn) {
+		this.dataTorn = dataTorn;
 	}
 
 	public boolean isAberto() {
@@ -90,8 +105,14 @@ public class Torneio {
 	public void setJogos(Jogos jogos) {
 		this.jogos = jogos;
 	}
-	
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 	
 }

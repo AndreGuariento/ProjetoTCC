@@ -21,16 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifms.EasyComp.modelo.Papel;
 import br.edu.ifms.EasyComp.modelo.Usuario;
-import br.edu.ifms.EasyComp.modelo.Local;
 import br.edu.ifms.EasyComp.modelo.Jogos;
 import br.edu.ifms.EasyComp.modelo.Torneio;
 import br.edu.ifms.EasyComp.repository.PapelRepository;
 import br.edu.ifms.EasyComp.repository.UsuarioRepository;
-import br.edu.ifms.EasyComp.repository.LocalRepository;
 import br.edu.ifms.EasyComp.repository.JogosRepository;
 import br.edu.ifms.EasyComp.repository.TorneioRepository;
 import br.edu.ifms.EasyComp.service.JogosService;
-import br.edu.ifms.EasyComp.service.LocalService;
 import br.edu.ifms.EasyComp.service.PapelService;
 import br.edu.ifms.EasyComp.service.TorneioService;
 import br.edu.ifms.EasyComp.service.UsuarioService;
@@ -38,10 +35,10 @@ import br.edu.ifms.EasyComp.service.UsuarioService;
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
-	/*
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+	/*
 	@Autowired
 	private PapelRepository papelRepository;
 	*/
@@ -50,9 +47,6 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
-	
-	@Autowired
-	private LocalService localService;
 	
 	@Autowired
 	private JogosService jogosService;
@@ -109,15 +103,26 @@ public class UsuarioController {
 	public String listarUsuarioTorneioID(Model model, @PathVariable("id") long id) {		
 		Torneio torneio = torneioService.buscarTorneioPorId(id);
 	    model.addAttribute("torneio", torneio);
-		return "/auth/mod/admin-listar-usuariotorneio";		
+		return "/auth/mod/mod-listar-usuariotorneio";		
 	}
 	
 	@RequestMapping("/mod/listarUserTorn")
 	public String listarUsuarioTorneio(Model model) {
-		List<Usuario> lista = usuarioService.listarUsuario(); 
-		model.addAttribute("usuarios", lista);		
-		return "/auth/mod/admin-listar-usuariotorneio";		
+		List<Torneio> lista = torneioService.listarTorneio(); 
+		model.addAttribute("torneios", lista);	
+		return "/auth/mod/mod-listar-torneios";		
 	}
+	
+	@RequestMapping("/user/listarUserTornSep")
+	public String listarUsuarioTorneio(Model model, @CurrentSecurityContext(expression = "authentication.name") String login) {
+		Usuario usuario = usuarioService.buscarUsuarioPorLogin(login);
+		/* List<Torneio> lista = torneioService.listarTorneio(); */
+		List<Torneio> lista = usuario.getTorneiospes();
+		System.out.println("-------------" + lista.size());
+		model.addAttribute("torneios", lista);	
+		return "/auth/user/user-listar-torneios";		
+	}
+	
 	
 	@GetMapping("/inscrever/{id}")
 	public String inscreverUsuario(@PathVariable("id") long id, Model model, @CurrentSecurityContext(expression = "authentication.name") String login) {
@@ -176,38 +181,6 @@ public class UsuarioController {
 		}		
 	    return "redirect:/usuario/admin/listar";
 	}
-	
-	@RequestMapping("/admin/listarLocal")
-	public String listarLocal(Model model) {
-		List<Local> lista = localService.listarLocal(); 
-		model.addAttribute("locais", lista);		
-		return "/auth/admin/admin-listar-local";		
-	}
-	
-	@GetMapping("/admin/apagarLocal/{id}")
-	public String deleteLocal(@PathVariable("id") long id, Model model) {
-		localService.apagarLocalPorId(id);
-	    return "redirect:/usuario/admin/listarLocal";
-	}
-	
-	@GetMapping("/editarLocal/{id}")
-	public String editarLocal(@PathVariable("id") long id, Model model) {
-		Local local = localService.buscarLocalPorId(id);
-	    model.addAttribute("local", local);
-	    return "/auth/user/user-alterar-local";
-	}
-	
-	@PostMapping("/editarLocal/{id}")
-	public String editarLocal(@PathVariable("id") long id, 
-			@Valid Local local, BindingResult result) {
-		if (result.hasErrors()) {
-	    	local.setId(id);
-	        return "/auth/user/user-alterar-local";
-	    }
-	    localService.alterarLocal(local);
-	    return "redirect:/usuario/admin/listarLocal";
-	}
-	
 	@RequestMapping("/admin/listarJogos")
 	public String listarJogo(Model model) {
 		List<Jogos> lista = jogosService.listarJogos(); 
@@ -239,6 +212,23 @@ public class UsuarioController {
 	    return "redirect:/usuario/admin/listarJogos";
 	}
 	
+	@GetMapping("/admin/novoJogo")
+	public String adicionarJogo(Model model) {
+		model.addAttribute("jogos", new Jogos());
+		return "/auth/admin/admin-novo-jogo";
+	}
+	
+	@PostMapping("/admin/salvarJogo")
+	public String salvarJogo(@Valid Jogos jogos, BindingResult result, 
+				Model model, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
+			return "/auth/admin/admin-novo-jogo";
+		}	
+		jogosService.gravarJogos(jogos);
+		attributes.addFlashAttribute("mensagem", "Jogo salvo com sucesso!");
+		return "redirect:/usuario/admin/listarJogos";
+	}
+	
 	@GetMapping("/novoTorneio")
 	public String adicionarTorneio(Model model) {
 		List<Jogos> jogos = jogosService.listarJogos();
@@ -249,17 +239,19 @@ public class UsuarioController {
 	
 	@PostMapping("/salvarTorneio")
 	public String salvarTorneio(@Valid Torneio torneio, BindingResult result, 
-				Model model, RedirectAttributes attributes) {
+				Model model, RedirectAttributes attributes, @CurrentSecurityContext(expression = "authentication.name") String login) {
+		
 		if (result.hasErrors()) {
 			return "/regtorneio";
 		}
+		Usuario usuario = usuarioService.buscarUsuarioPorLogin(login);
 		
 //		Torneio tor = torneioService.buscarTorneioPorId(torneio.getId());
 //		if (tor != null) {
 //			model.addAttribute("torneioExiste", "Torneio já cadastrado");
 //			return "/regtorneio";
 //		}
-		
+		torneio.setUsuario(usuario);
 		torneioService.gravarTorneio(torneio);
 		attributes.addFlashAttribute("mensagem", "Torneio salvo com sucesso!");
 		return "redirect:/asstorneio";
@@ -287,11 +279,14 @@ public class UsuarioController {
 //	    return "redirect:/usuario/admin/listar";
 //	}
 	
-//	@GetMapping("/user/apagarTorneio")
-//	public String deleteTorneio(@PathVariable("id") long id, Model model) {
-//		torneioService.apagarTorneioPorId(id);
-//	    return "redirect:/usuario/user/listarTorneio";
-//	}
+	@GetMapping("/user/apagarUserTorn/{id}/{idtorn}")
+	public String deleteUserTorn(@PathVariable("id") long id, @PathVariable("idtorn") long idtorn, Model model) {
+		Usuario usuario = usuarioService.buscarUsuarioPorId(id);
+		Torneio torneio = torneioService.buscarTorneioPorId(idtorn);
+		usuario.removeUserTorneio(torneio);
+		usuarioRepository.flush();
+	    return "redirect:/usuario/mod/listarUserTorneioId/" + idtorn;
+}
 //	
 //	@GetMapping("/editarTorneio/{id}")
 //	public String editarTorneio(@PathVariable("id") long id, Model model) {
