@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" xmls:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pt" xmls:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>EasyComp</title>
@@ -19,7 +18,7 @@
         </header>
         <main class="container-md">
             <div class="text-center" style="padding: 2% 0;">
-                <h1>Torneios Inscritos</h1>
+                <h1>Gerenciar Torneios</h1>
             </div>
                 <div class="row">
                 <th:block th:each="torneio : ${torneios}">
@@ -34,11 +33,7 @@
 								</th:block>	
                       			<li class="list-group-item"><span th:text="${#dates.format(torneio.dataTorn, 'dd/MM/yyyy')}"> Data: </span></li>
                     		</ul>
-                    		<!-- <tr th:if="${usuario.id < 0}">
-							<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="/usuario/novo" style="padding: 5% 3%; text-decoration: none;">Inscrever-se</a>
-							</tr> -->
-            					<a type="button" class="btn-lg btn-primary" data-toggle="modal" th:href="${torneio.link}" style="padding: 5% 3%; text-decoration: none;">Acompanhar</a>
-        					</div>
+                    		<a type="button" class="btn-lg btn-success" data-toggle="modal" th:href="@{/usuario/admin/listarUserTorneioId/{id}(id=${torneio.id})}" style="padding: 5% 3%; text-decoration: none;">Visualizar</a>
                         </div>
                     </div>
                 </div>

@@ -39,7 +39,7 @@
                   </div>
                 <div class="form-group">
                   <label for="tpartic">Data do Torneio</label>
-                  <input type="text" class="form-control" id="tpartic" th:field="*{dataTorn}">
+                  <input type="date" class="form-control" id="tpartic" th:field="*{dataTorn}">
                   <span class="mensagem" th:if="${#fields.hasErrors('dataTorn')}" th:errors="*{dataTorn}"></span>
                 </div>
                 <!-- <div class="form-group">
