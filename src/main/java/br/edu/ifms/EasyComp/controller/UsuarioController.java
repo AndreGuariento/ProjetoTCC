@@ -99,18 +99,18 @@ public class UsuarioController {
 		return "/auth/admin/admin-listar-usuario";		
 	}
 	
-	@RequestMapping("/mod/listarUserTorneioId/{id}")
+	@RequestMapping("/admin/listarUserTorneioId/{id}")
 	public String listarUsuarioTorneioID(Model model, @PathVariable("id") long id) {		
 		Torneio torneio = torneioService.buscarTorneioPorId(id);
 	    model.addAttribute("torneio", torneio);
-		return "/auth/mod/mod-listar-usuariotorneio";		
+		return "/auth/admin/admin-listar-usuariotorneio";		
 	}
 	
-	@RequestMapping("/mod/listarUserTorn")
+	@RequestMapping("/admin/listarUserTorn")
 	public String listarUsuarioTorneio(Model model) {
 		List<Torneio> lista = torneioService.listarTorneio(); 
 		model.addAttribute("torneios", lista);	
-		return "/auth/mod/mod-listar-torneios";		
+		return "/auth/admin/admin-listar-torneios";		
 	}
 	
 	@RequestMapping("/user/listarUserTornSep")
