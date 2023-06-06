@@ -20,13 +20,15 @@
   <div class="row">
   	
     <div class="col">
-    	<h1>Lista de Usuários</h1>
+    	<h1>Lista de Usuários Inscritos</h1>
 	
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Username</th>
-				<th>Login</th>
+				<th>E-mail</th>
+				<th>Status</th>
+				<th>Papel</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,8 +38,9 @@
 			<th:block th:each="usuario : ${torneio.usuarios}">
 			<!-- <th:block th:if="${usuario.torneios.size() > 0}"> -->
 			<tr>
-				<td><span th:text="${usuario.username}"> Username </span></td>
 				<td><span th:text="${usuario.login}">Login </span></td>
+				<td><span th:text="${usuario.email}">E-mail </span></td>
+				
 				
 				<td>
 					<span th:text="${usuario.ativo} ? 'ATIVO' : 'NÃO ATIVO'"> Ativo? </span>
@@ -52,7 +55,7 @@
 				<td>
 					<a class="btn btn-outline-danger btn-sm" 
 					   th:href="@{/usuario/user/apagarUserTorn/{id}/{idtorn} (id=${usuario.id}, idtorn=${torneio.id})}"
-					   th:data-confirm-delete="|Você gostaria de remover ${usuario.username}?|"
+					   th:data-confirm-delete="|Você gostaria de remover ${usuario.login}?|"
   					   onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
 					   Remover
 					</a>

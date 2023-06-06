@@ -28,6 +28,7 @@
 				<th>Username</th>
 				<th>E-mail</th>
 				<th>Login</th>
+				<th>Papel</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,9 +36,8 @@
 				<td colspan="2">Sem usuários</td>
 			</tr>
 			<tr th:each="usuario : ${usuarios}">
-				<td><span th:text="${usuario.username}"> Username </span></td>
-				<td><span th:text="${usuario.email}"> E-mail </span></td>
 				<td><span th:text="${usuario.login}">Login </span></td>
+				<td><span th:text="${usuario.email}"> E-mail </span></td>
 				
 				<td>
 					<span th:text="${usuario.ativo} ? 'ATIVO' : 'NÃO ATIVO'"> Ativo? </span>
@@ -52,7 +52,7 @@
 				<td>
 					<a class="btn btn-outline-danger btn-sm" 
 					   th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
-					   th:data-confirm-delete="|Você gostaria de apagar ${usuario.username}?|"
+					   th:data-confirm-delete="|Você gostaria de apagar ${usuario.login}?|"
   					   onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
 					   Apagar
 					</a>

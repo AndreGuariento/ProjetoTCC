@@ -18,7 +18,7 @@
         </header>
         <main class="container-md">
             <div class="text-center" style="padding: 2% 0;">
-                <h1>Gerenciar Torneios</h1>
+                <h1>Gerenciar Meus Torneios</h1>
             </div>
                 <div class="row">
                 <th:block th:each="torneio : ${torneios}">
@@ -33,7 +33,11 @@
 								</th:block>	
                       			<li class="list-group-item"><span th:text="${#dates.format(torneio.dataTorn, 'dd/MM/yyyy')}"> Data: </span></li>
                     		</ul>
-                    		<a type="button" class="btn-lg btn-success" data-toggle="modal" th:href="@{/usuario/mod/listarUserTorneioId/{id}(id=${torneio.id})}" style="padding: 5% 3%; text-decoration: none;">Visualizar</a>
+                    		<a type="button" class="btn-lg btn-success" data-toggle="modal" th:href="@{/usuario/admin/listarUserTorneioId/{id}(id=${torneio.id})}" style="padding: 5% 3%; text-decoration: none;">Visualizar</a>
+                    		<a type="button" class="btn-lg btn-danger" th:href="@{/usuario/user/apagarTorneio/{id}(id=${torneio.id})}" th:data-confirm-delete="|Você gostaria de apagar ${torneio.nome}?|"
+  					   		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false" style="padding: 5% 3%; text-decoration: none;">
+					   		Apagar
+							</a>
                         </div>
                     </div>
                 </div>

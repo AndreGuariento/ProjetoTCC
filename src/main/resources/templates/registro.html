@@ -27,13 +27,8 @@
 				<span th:text="${mensagem}"></span>
 			</div>
             <form class="text-center" id="form2" action="#" th:action="@{/usuario/salvar}" th:object="${usuario}" method="post">
-                <div class="form-group">
-                    <label for="rnusuario">Insira o seu nome de usuario</label>
-                    <input type="text" class="form-control" id="rnusuario" th:field="*{username}">
-                    <span class="mensagem" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-                  </div>
                   <div class="form-group">
-                    <label for="rlogin">Insira o seu login</label>
+                    <label for="rlogin">Insira o seu nome de usuario</label>
                     <input type="text" class="form-control" id="rlogin" th:field="*{login}">
                     <span class="mensagem" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
 			    	

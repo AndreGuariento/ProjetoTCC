@@ -31,12 +31,12 @@
 					th:object="${usuario}" method="post">
 
 					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Username:</label>
-						<div class="col-sm-5">
-							<input class="form-control" type="text" th:field="*{username}"
+						<label class="col-sm-1 col-form-label">Login:</label>
+						<div class="col-sm-2">
+							<input class="form-control" type="text" th:field="*{login}"
 								disabled>
 						</div>
-					</div>
+					</div>	
 
 					<div class="row mb-3">
 						<label class="col-sm-1 col-form-label">E-mail:</label>
@@ -53,16 +53,7 @@
 							<input class="form-control" type="text"
 								th:field="*{password}" disabled>
 						</div>
-					</div>
-
-
-					<div class="row mb-3">
-						<label class="col-sm-1 col-form-label">Login:</label>
-						<div class="col-sm-2">
-							<input class="form-control" type="text" th:field="*{login}"
-								disabled>
-						</div>
-					</div>					
+					</div>				
 	
 					<div class="row mb-3">
 						<label class="col-sm-1 col-form-label">Ativado?:</label>
