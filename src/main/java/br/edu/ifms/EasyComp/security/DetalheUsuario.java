@@ -69,7 +69,7 @@ public class DetalheUsuario implements UserDetails {
 	}
 	
 	public String getNome() {
-		return usuario.getUsername();
+		return usuario.getLogin();
 	}
 
 }

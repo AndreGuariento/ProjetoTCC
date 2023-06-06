@@ -24,7 +24,18 @@ public class TorneioServiceImpl implements TorneioService {
 	@Override
 	public void apagarTorneioPorId(Long id) {
 		Torneio torneio = buscarTorneioPorId(id);
-		torneioRepository.delete(torneio);
+		/*
+		 * torneio.setUsuarios(null); torneioRepository.save(torneio);
+		 */
+		/*
+		 * for (Usuario usuario : torneio.getUsuarios()) {
+		 * usuario.getTorneios().remove(torneio); }
+		 */
+			torneioRepository.delete(torneio);
+			/*
+			 * for (Book book : author1.getBooks()) { book.getAuthors().remove(author1); }
+			 * entityManager.remove(author1);
+			 */
 	}
 
 	@Override

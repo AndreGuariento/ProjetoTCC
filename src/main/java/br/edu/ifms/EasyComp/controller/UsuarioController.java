@@ -67,6 +67,7 @@ public class UsuarioController {
 		return false;
 	}
 	
+	// Usuario
 		
 	@GetMapping("/novo")
 	public String adicionarUsuario(Model model) {
@@ -128,7 +129,13 @@ public class UsuarioController {
 	public String inscreverUsuario(@PathVariable("id") long id, Model model, @CurrentSecurityContext(expression = "authentication.name") String login) {
 		Usuario usuario = usuarioService.buscarUsuarioPorLogin(login);
 		Torneio torneio = torneioService.buscarTorneioPorId(id);
+		List<Torneio> lista = usuario.getTorneios();
+		lista.add(torneio);
+		usuario.setTorneios(lista);
+		/* torneio.setUsuario(usuario);
 		usuario.getTorneios().add(torneio);
+		usuarioService.gravarUsuario(usuario); */
+		usuario.setPapeis(usuario.getPapeis());
 		usuarioService.gravarUsuario(usuario);
 	    return "redirect:/asstorneio";
 	}
@@ -156,7 +163,8 @@ public class UsuarioController {
 	    usuarioService.alterarUsuario(usuario);
 	    return "redirect:/usuario/admin/listar";
 	}
-		
+	//Papel
+	
 	@GetMapping("/editarPapel/{id}")
 	public String selecionarPapel(@PathVariable("id") long id, Model model) {
 		Usuario usuario = usuarioService.buscarUsuarioPorId(id);
@@ -181,6 +189,7 @@ public class UsuarioController {
 		}		
 	    return "redirect:/usuario/admin/listar";
 	}
+	//Jogos
 	@RequestMapping("/admin/listarJogos")
 	public String listarJogo(Model model) {
 		List<Jogos> lista = jogosService.listarJogos(); 
@@ -228,6 +237,8 @@ public class UsuarioController {
 		attributes.addFlashAttribute("mensagem", "Jogo salvo com sucesso!");
 		return "redirect:/usuario/admin/listarJogos";
 	}
+	
+	// Torneio
 	
 	@GetMapping("/novoTorneio")
 	public String adicionarTorneio(Model model) {
@@ -285,8 +296,14 @@ public class UsuarioController {
 		Torneio torneio = torneioService.buscarTorneioPorId(idtorn);
 		usuario.removeUserTorneio(torneio);
 		usuarioRepository.flush();
-	    return "redirect:/usuario/mod/listarUserTorneioId/" + idtorn;
+	    return "redirect:/usuario/admin/listarUserTorneioId/" + idtorn;
 }
+	
+	@GetMapping("/user/apagarTorneio/{id}")
+	public String deleteTorneio(@PathVariable("id") long id, Model model) {
+		torneioService.apagarTorneioPorId(id);
+	    return "redirect:/asstorneio";
+	}
 //	
 //	@GetMapping("/editarTorneio/{id}")
 //	public String editarTorneio(@PathVariable("id") long id, Model model) {

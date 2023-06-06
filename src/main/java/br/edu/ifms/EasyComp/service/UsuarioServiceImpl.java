@@ -89,7 +89,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
-	public void atribuirTorneioParaUsuario(long idUsuario, int[] idsTorneios, boolean isAtivo) {
+	public void atribuirTorneioParaUsuario(long idUsuario, int[] idsTorneios) {
 		List<Torneio> torneios = new ArrayList<Torneio>();			 
 		for (int i = 0; i < idsTorneios.length; i++) {
 			long idTorneio = idsTorneios[i];
@@ -98,7 +98,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		Usuario usuario = buscarUsuarioPorId(idUsuario);
 		usuario.setTorneios(torneios);
-		usuario.setAtivo(isAtivo);
 		alterarUsuario(usuario);		
 	}
 

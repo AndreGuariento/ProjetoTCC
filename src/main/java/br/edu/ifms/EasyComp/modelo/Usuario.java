@@ -3,6 +3,7 @@ package br.edu.ifms.EasyComp.modelo;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,10 +25,6 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull
-	@Size(min = 3, message = "O nome deve ter no mínimo 3 carateres")
-	private String username;
 	
 	@Email(message = "Email inválido")
 	private String email;
@@ -60,7 +57,7 @@ public class Usuario {
 	
 	private List<Torneio> torneios;
 	
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	private List<Torneio> torneiospes;
 
 	public Long getId() {
@@ -69,14 +66,6 @@ public class Usuario {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getEmail() {

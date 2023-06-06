@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Torneio {
 	
 	private boolean aberto;
 	
-	@ManyToMany(mappedBy = "torneios")
+	@ManyToMany(mappedBy = "torneios", cascade = CascadeType.REMOVE)
 	private List<Usuario> usuarios;
 	
 	@ManyToOne
